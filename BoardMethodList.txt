@@ -1,0 +1,140 @@
+//Boardクラスのメソッド一覧
+
+
+/**************** 初期化に関するメソッド *************************/
+	
+	// 盤面の初期化(駒を初期配置にする)
+    Board();
+
+/*************** フィールドのセッターとゲッター ********************/
+
+    // 盤面上の駒のゲッター(possitionのゲッター)
+    ChessPiece getPosition(int player, int r, int c);
+
+    // 盤面上に駒をセット(positionのセッター)
+    Boolean setPosition(int player, int r, int c, ChessPiece piece);
+
+    // 持ち駒のゲッター(propertyのゲッター)
+    ChessPiece getProperty(int player, int i);
+
+    // 持ち駒のセッター(propertyのセッター)
+    Boolean setProperty(int player, ChessPiece piece);
+    
+    // 持ち駒数を返す
+    int getPropertySize(int player);
+        
+/***************** 制約関係 **************************************/
+
+    // 指定された位置に自身の駒がないか(ないならtrueを返す)
+    Boolean isEmpty(int player, int r, int c);
+
+	// 指定された位置に駒がないか(ないならtrueを返す)
+    Boolean isEmptyAllcheck(int player, int r, int c);
+
+    // 盤面上の2地点間に障害物がないか
+    Boolean isClear(int player, int r1, int c1, int r2, int c2);	
+
+    //これ以上動けなくなる位置に設置してないか pieceが存在していることは確定している
+    Boolean isDeadEnd(int player, int i, int r, int c)
+
+	/*isDeadEnd 歩、香、桂の場合のみおきる
+      歩と香は１列目(c=0)打つことができない
+      桂は１列目、２列目に(c==0||c==1)打つことができない
+	*/
+
+    //移動先がこれ以上動けなくなる位置ではないか
+    Boolean isDeadEnd(int player, int r2 , int c2)
+
+
+/****************** 駒の操作 ********************************/
+
+    //盤面上の駒を移動
+    Boolean moveChessPiece(int player, int r1, int c1, int r2, int c2);
+
+    // 持ち駒を盤面に出す
+    Boolean putCapturedPiece(int player, int i, int r, int c);
+
+/************ 指定した条件に合う駒を取得 *******************************/
+
+    // 王または玉の位置を返す
+    int[] getKingPosition(int player);
+
+	// 開始位置(r1,c1)から目的位置(r2,c2)へ1マスずつ進んだ場合に
+    // 最初にぶつかる駒の持ち主と位置を返す
+    // (縦横斜めの関係にある2地点間のみ)
+    // ぶつからなかった場合は-1を返す
+    int[] closestChessPiece(int player, int r1, int c1, int r2, int c2);
+
+    // 指定した位置に移動可能な駒の位置の2次元配列を返す
+    int[][] getMovablePiecePosition(int player, int r, int c);
+
+/************* チェックメイト(詰み)に関するメソッド ********************/
+
+    // (そこに置いたら)二歩になってないか
+    Boolean isDoublePawn(int player, int r);
+
+    // 指定した駒が一手で奪られる可能性はないか
+    Boolean isGettable(int player, int r, int c);
+
+    // (今の盤面で)自分が詰んでないか(王手になってないか)
+    Boolean isCheckmate(int player);
+
+    // (そこに移動したら)自分が詰んじゃわないか
+    Boolean isCheckmate(int player, int r1, int c1, int r2, int c2);
+
+    // (そこに置いたら)自分が詰んじゃわないか
+    Boolean isCheckmate(int player, int i, int r, int c);
+
+    // 王手をかけている相手の駒の位置の2次元配列を返す(王手でないならnullを返す)
+    int[][] getCheckmatePiecePosition(int player);
+
+/******************** 消去関係のメソッド **********************/
+
+    // 盤面上の駒を消去
+    Boolean deletePosition(int player, int r, int c);
+
+    // 持ち駒を消去
+    Boolean deleteProperty(int player, int i);
+
+/*********** 盤面のコピーに関するメソッド *******************/
+
+	// 引数のboardに盤面をコピーする
+	void copyBoard(Board board);
+
+/*********** 駒のコピーに関するメソッド *********************/
+
+    // 駒のコピーを返す
+    ChessPiece copyChessPiece(ChessPiece piece);
+
+    // 盤面上の駒のコピーを返す
+    ChessPiece copyChessPiece(int player, int r, int c);
+
+    // 盤面上の駒をコピー・初期化して(表にして)返す
+    ChessPiece copyChessPieceReset(int player, int r, int c);
+
+    // 持ち駒のコピーを返す
+    ChessPiece copyChessPiece(int player, int i);
+
+/****************** 画面表示関係のメソッド ************************/
+
+    // 指定されたマスの駒表示
+    void printPosition(int player, int r, int c);
+
+    // 持ち駒表示
+    int printProperty(int player);
+
+    // 盤面を表示
+    void printBoard(int player);
+    
+ /*************** 画面表示用のStringを返す *********************/
+ 
+    // 盤面の状況をStringで返す
+    String GetPrintBoard(int player);
+ 
+	// 持ち駒をStringで返す
+    public String GetPrintProperty(int player);
+
+    // 盤面の1マス分の状態をStringで返す
+    public String GetPrintPosition(int player, int r, int c);
+
+
